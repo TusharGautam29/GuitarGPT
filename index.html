@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GuitarGPT</title>
+    <!--Linking Google Font for icons-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+</head>
+<body>
+    <div class="chat-container">
+        <header class="chat-header">
+            <h1>🎸 GuitarGPT</h1>
+            <h3 class="title">Hello there <br>How can i help you</h3>
+
+            <ul class="suggestion-container">
+                <li class="suggestion">
+                    <h4>Tell me all the notes on a fretboard</h4>
+                    <span class="material-symbols-rounded">draw</span>
+                </li>
+                <li class="suggestion">
+                    <h4>Tell me different types of woods used in a guitar</h4>
+                    <span class="material-icons">lightbulb</span>
+                </li>
+                <li class="suggestion">
+                    <h4>What is guitar music theory and where can i learn it</h4>
+                    <span class="material-icons">stars</span>
+                </li>
+                <li class="suggestion">
+                    <h4>How to play guitar</h4>
+                    <span class="material-icons">explore</span>
+                </li>
+                <li class="suggestion">
+                    <h4>Easy guitar songs</h4>
+                    <span class="material-icons">code</span>
+                </li>
+                <li class="suggestion">
+                    <h4>r/guitar</h4>
+                    <span class="material-icons">map</span>
+                </li>
+            </ul>
+                        
+        </header>
+        <div class="chat-messages" id="chat-messages">
+            <!-- Chat messages will appear here -->
+             <div class="message-outgoing">
+                <div class="message-content">
+                    <img src="https://png.pngtree.com/png-vector/20241012/ourlarge/pngtree-cat-rockstar-playing-electric-guitar-png-image_13990747.png" alt="User" class="avatar">
+                    <p class="text">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nihil, ad?</p>
+                </div>
+             </div>
+             <div class="message-incoming">
+                <div class="message-content">
+                    <img src="data:image/png;base64,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" alt="User" class="avatar">
+                    <p class="text">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nihil, ad?</p>
+                </div>
+                <button class="material-symbols-rounded">content_copy</button>
+             </div>
+             <!--<div class="message-incoming">
+                <div class="message-content">
+                    <img src="data:image/png;base64,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" alt="User" class="avatar">
+                    <div id="loading-container">
+                        <div class="loading-bar"></div>
+                        <div class="loading-bar"></div>
+                        <div class="loading-bar"></div>
+                    </div>                    
+                </div>
+                <button class="material-symbols-rounded">content_copy</button>
+             </div>-->
+        </div>
+        <div class="typing-area">
+            <form action="#" class="typing-form">
+                <div class="input-wrapper">
+                    <input class="typing-input" placeholder="Ask something about guitars..." rows="1"></textarea>
+                    <button class="material-symbols-rounded" >send</button>
+                </div>
+                <div class="action-buttons">
+                    <span class="material-symbols-rounded">light_mode</span>
+                    <span class="material-symbols-rounded">delete</span>
+                </div>
+             </form>
+             <p class="disclaimer-text">GuitarGPT is an AI-powered assistant designed to provide helpful information and tips about guitars, music theory, and playing techniques. While we strive to ensure accuracy, the information provided may not always be precise or tailored to your specific needs. For professional advice, please consult an experienced guitarist, technician, or music instructor. Use the information at your own discretion.
+
+             </p>
+
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
