@@ -14,9 +14,11 @@ body {
     align-items: center;
     min-height: 100vh;
 }
+
 header{
     display: none;
 }
+
 /* Chat container styling */
 .chat-container {
     display: flex;
@@ -55,12 +57,10 @@ header{
     padding-left: 310pt;/* Muted tone */
 }
 
-
 /* Container for the suggestions */
 .suggestion-container {
     display: flex;
     flex-direction: row; /* Align items horizontally */
- /* Space items out evenly */
     gap: 25px; /* Space between each suggestion */
     margin-top: 20px;
     padding: 15px;
@@ -100,16 +100,7 @@ header{
     margin-right: 10px;
 }
 
-
-
-.material-symbols-rounded,
-.material-icons,
-.fas {
-    color: #9b59b6; /* Purple accent color */
-    font-size: 1.4rem;
-}
-
-/* Chat messages area */
+/* Message area and content alignment */
 .chat-messages {
     flex-grow: 1;
     overflow-y: auto;
@@ -117,55 +108,58 @@ header{
     background: #0d1117;
     border-top: 1px solid #30363d;
     border-bottom: 1px solid #30363d;
+    display: flex;
+    flex-direction: column; /* Ensure messages stack vertically */
+    gap: 10px; /* Space between messages */
 }
 
-.chat-messages .avatar{
+/* Align ChatGPT's response to the right */
+.incoming .message-content {
+    justify-content: flex-end;
+    display: flex;
+    flex-direction: row-reverse; /* Place the message on the right */
+    width: 100%;
+     /* Ensures the message takes the full width */
+}
+
+/* Align your messages to the left */
+.outgoing .message-content {
+    justify-content: flex-start;
+    display: flex;
+    flex-direction: row;
+     /* Place the message on the left */
+}
+
+/* Adjust message content for better alignment */
+.message-content {
+    display: flex;
+    align-items: center;
+}
+
+/* Add space between the image and the message */
+.message-content .text {
+    margin-left: 10px;
+    max-width: 60%;
+    word-wrap: break-word;
+}
+
+.message-content img.avatar {
+    order: 0;
+    margin-right: 10px; /* Add space between image and message for outgoing */
+}
+
+/* Align the avatar to the left */
+.outgoing .message-content img.avatar {
+    margin-right: 10px;
     width: 40px;
     height: 40px;
-    border-radius: 50%;
-    object-fit: cover;
-    align-self: flex-start;
-}
-#loading-container {
-    width: 100%;
-    height: 12px; /* Height to accommodate 3 stacked bars */
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between; /* Add spacing between the bars */
-    background: #1a1a1a; /* Dark mode background */
 }
 
-.loading-bar {
-    width: 100%;
-    height: 4px;
-    position: relative;
-    overflow: hidden;
-    background: #1a1a1a; /* Dark mode background */
+.incoming .message-content img.avatar {
+    margin-left: 10px;
+    width: 40px;
+    height: 40px;
 }
-
-.loading-bar::before {
-    content: '';
-    position: absolute;
-    width: 50%;
-    height: 100%;
-    background: linear-gradient(to right, #9b59b6, #8e44ad, #9b59b6); /* Purple gradient */
-    animation: gemini-loading 1.5s linear infinite;
-}
-
-@keyframes gemini-loading {
-    0% {
-        left: -50%;
-    }
-    50% {
-        left: 25%;
-    }
-    100% {
-        left: 100%;
-    }
-}
-
-
-
 
 /* Typing area */
 .typing-area {
@@ -248,4 +242,44 @@ button:hover {
     color: #8b949e;
     text-align: center;
     line-height: 1.4;
+}
+
+/* Loading animation styling */
+.loading-container {
+    width: 100%;
+    height: 12px; /* Height to accommodate 3 stacked bars */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Add spacing between the bars */
+    background: #1a1a1a;
+    padding: 0pt; /* Dark mode background */
+}
+
+.loading-bar {
+    width: 100%;
+    height: 4px;
+    position: relative;
+    overflow: hidden;
+    background: #1a1a1a; /* Dark mode background */
+}
+
+.loading-bar::before {
+    content: '';
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(to right, #9b59b6, #8e44ad, #9b59b6); /* Purple gradient */
+    animation: gemini-loading 1.5s linear infinite;
+}
+
+@keyframes gemini-loading {
+    0% {
+        left: -50%;
+    }
+    50% {
+        left: 25%;
+    }
+    100% {
+        left: 100%;
+    }
 }
