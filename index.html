@@ -77,8 +77,8 @@
                     <button class="material-symbols-rounded" >send</button>
                 </div>
                 <div class="action-buttons">
-                    <span class="material-symbols-rounded">light_mode</span>
-                    <span class="material-symbols-rounded">delete</span>
+                    <span id="toggle-theme-button" class="material-symbols-rounded">light_mode</span>
+                    <span id ="delete-button" class="material-symbols-rounded">delete</span>
                 </div>
              </form>
              <p class="disclaimer-text">GuitarGPT is an AI-powered assistant designed to provide helpful information and tips about guitars, music theory, and playing techniques. While we strive to ensure accuracy, the information provided may not always be precise or tailored to your specific needs. For professional advice, please consult an experienced guitarist, technician, or music instructor. Use the information at your own discretion.
@@ -88,5 +88,26 @@
         </div>
     </div>
     <script src="script.js"></script>
+    <script>
+        const themeToggleButton = document.getElementById('theme-toggle');
+        const bodyElement = document.body;
+
+        // Check the current theme on load and set accordingly
+        if (localStorage.getItem('theme') === 'light') {
+            bodyElement.classList.add('light-theme');
+        }
+
+        // Toggle the theme on button click
+        themeToggleButton.addEventListener('click', () => {
+            bodyElement.classList.toggle('light-theme');
+
+            // Save the theme preference in localStorage
+            if (bodyElement.classList.contains('light-theme')) {
+                localStorage.setItem('theme', 'light');
+            } else {
+                localStorage.setItem('theme', 'dark');
+            }
+        });
+    </script>
 </body>
 </html>

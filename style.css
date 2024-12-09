@@ -1,22 +1,53 @@
-/* Import Google Fonts for clean, modern text */
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
-@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css'); /* For additional icons */
-
-/* General body styling */
+/* Dark theme (default) */
 body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Roboto', sans-serif;
-    background-color: #0d1117; /* Deep dark mode background */
-    color: #c9d1d9; /* Subtle off-white text */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
+    background-color: #0d1117;
+    color: #c9d1d9;
+    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition */
 }
 
-header{
+/* Light theme */
+body.light-theme {
+    background-color: #ffffff;
+    color: #333333;
+    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition */
+}
+
+/* Styling for the theme toggle button */
+.theme-toggle-btn {
+    background: none;
+    border: none;
+    color: #c9d1d9;
+    cursor: pointer;
+    font-size: 1.5rem;
+    transition: color 0.3s ease;
+}
+
+/* Icon color change on theme toggle */
+body.light-theme .theme-toggle-btn {
+    color: #333333;
+}
+
+/* Hide moon icon in light theme and show sun icon */
+body.light-theme .theme-toggle-btn .fa-moon {
     display: none;
+}
+
+body.light-theme .theme-toggle-btn .fa-sun {
+    display: inline;
+}
+
+/* Show moon icon in dark theme and hide sun icon */
+body .theme-toggle-btn .fa-sun {
+    display: none;
+}
+
+body .theme-toggle-btn .fa-moon {
+    display: inline;
+}
+
+/* Header section */
+header {
+    display: block;
 }
 
 /* Chat container styling */
@@ -26,16 +57,16 @@ header{
     width: 90%;
     max-width: 1200px;
     height: 90vh;
-    background: #161b22; /* Slightly lighter for card-like appearance */
+    background: #161b22;
     border-radius: 15px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
     overflow: hidden;
 }
 
-/* Header section */
+/* Header for chat container */
 .chat-header {
     padding: 20px;
-    background: #21262d; /* Distinct but dark */
+    background: #21262d;
     color: #ffffff;
     text-align: center;
     border-bottom: 1px solid #30363d;
@@ -53,28 +84,26 @@ header{
     background: linear-gradient(to right, #4285f4, #d96570);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    align-items: center;
-    padding-left: 310pt;/* Muted tone */
+    padding-left: 310pt;
 }
 
-/* Container for the suggestions */
+/* Suggestion container styling */
 .suggestion-container {
     display: flex;
-    flex-direction: row; /* Align items horizontally */
-    gap: 25px; /* Space between each suggestion */
+    flex-direction: row;
+    gap: 25px;
     margin-top: 20px;
     padding: 15px;
-    background-color: #21262d; /* Dark background for the suggestion box */
+    background-color: #21262d;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add slight shadow for better visibility */
-    overflow: auto; /* Prevents overflow if the items are too wide */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* Styling for individual suggestion items */
+/* Individual suggestion styling */
 .suggestion-container .suggestion {
     display: flex;
     padding: 10px 15px;
-    background-color: #30363d; /* Slightly lighter background for each item */
+    background-color: #30363d;
     color: #c9d1d9;
     flex-direction: column;
     align-items: flex-end;
@@ -82,25 +111,18 @@ header{
     border-radius: 8px;
     cursor: pointer;
     height: 100pt;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    width: 227px; /* Ensures each suggestion has a minimum width */
+    width: 227px;
     justify-content: center;
+    transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 /* Hover effect for suggestion items */
 .suggestion-container .suggestion:hover {
-    background-color: #9b59b6; /* Purple on hover */
+    background-color: #9b59b6;
     transform: translateY(-3px);
 }
 
-/* Icon color */
-.suggestion-container .material-symbols-rounded,
-.suggestion-container .material-icons {
-    color: #9b59b6; /* Purple icon color */
-    margin-right: 10px;
-}
-
-/* Message area and content alignment */
+/* Message area */
 .chat-messages {
     flex-grow: 1;
     overflow-y: auto;
@@ -109,34 +131,29 @@ header{
     border-top: 1px solid #30363d;
     border-bottom: 1px solid #30363d;
     display: flex;
-    flex-direction: column; /* Ensure messages stack vertically */
-    gap: 10px; /* Space between messages */
+    flex-direction: column;
+    gap: 10px;
 }
 
-/* Align ChatGPT's response to the right */
+/* Incoming and outgoing message alignment */
 .incoming .message-content {
     justify-content: flex-end;
     display: flex;
-    flex-direction: row-reverse; /* Place the message on the right */
-    width: 100%;
-     /* Ensures the message takes the full width */
+    flex-direction: row-reverse;
 }
 
-/* Align your messages to the left */
 .outgoing .message-content {
     justify-content: flex-start;
     display: flex;
     flex-direction: row;
-     /* Place the message on the left */
 }
 
-/* Adjust message content for better alignment */
+/* Message content styling */
 .message-content {
     display: flex;
     align-items: center;
 }
 
-/* Add space between the image and the message */
 .message-content .text {
     margin-left: 10px;
     max-width: 60%;
@@ -144,24 +161,11 @@ header{
 }
 
 .message-content img.avatar {
-    order: 0;
-    margin-right: 10px; /* Add space between image and message for outgoing */
-}
-
-/* Align the avatar to the left */
-.outgoing .message-content img.avatar {
-    margin-right: 10px;
     width: 40px;
     height: 40px;
 }
 
-.incoming .message-content img.avatar {
-    margin-left: 10px;
-    width: 40px;
-    height: 40px;
-}
-
-/* Typing area */
+/* Typing area styling */
 .typing-area {
     padding: 15px;
     background: #161b22;
@@ -174,12 +178,11 @@ header{
     gap: 10px;
 }
 
-/* Input wrapper */
 .input-wrapper {
     flex-grow: 1;
     display: flex;
     align-items: center;
-    background: #21262d; /* Dark input background */
+    background: #21262d;
     border-radius: 10px;
     padding: 10px 15px;
 }
@@ -197,13 +200,9 @@ header{
     color: #8b949e;
 }
 
-input:focus {
-    outline: none;
-}
-
-/* Send button */
+/* Send button styling */
 button {
-    background: #000000; /* Purple for action button */
+    background: #000000;
     border: none;
     color: #ffffff;
     border-radius: 50%;
@@ -218,12 +217,13 @@ button {
     transition: all 0.3s ease;
 }
 
+/* Hover effect for send button */
 button:hover {
-    background: #3c0654; /* Darker purple on hover */
+    background: #3c0654;
     transform: scale(1.5);
 }
 
-/* Action buttons */
+/* Action button styling */
 .action-buttons span {
     color: #c9d1d9;
     cursor: pointer;
@@ -232,10 +232,10 @@ button:hover {
 }
 
 .action-buttons span:hover {
-    color: #9b59b6; /* Purple hover effect */
+    color: #9b59b6;
 }
 
-/* Disclaimer text */
+/* Disclaimer text styling */
 .disclaimer-text {
     margin-top: 10px;
     font-size: 0.85rem;
@@ -247,20 +247,18 @@ button:hover {
 /* Loading animation styling */
 .loading-container {
     width: 100%;
-    height: 12px; /* Height to accommodate 3 stacked bars */
+    height: 12px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between; /* Add spacing between the bars */
+    justify-content: space-between;
     background: #1a1a1a;
-    padding: 0pt; /* Dark mode background */
 }
 
 .loading-bar {
     width: 100%;
     height: 4px;
     position: relative;
-    overflow: hidden;
-    background: #1a1a1a; /* Dark mode background */
+    background: #1a1a1a;
 }
 
 .loading-bar::before {
@@ -268,18 +266,27 @@ button:hover {
     position: absolute;
     width: 50%;
     height: 100%;
-    background: linear-gradient(to right, #9b59b6, #8e44ad, #9b59b6); /* Purple gradient */
+    background: linear-gradient(to right, #9b59b6, #8e44ad, #9b59b6);
     animation: gemini-loading 1.5s linear infinite;
 }
+.delete-btn {
+    background-color: #f44336;
+    color: #fff;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.delete-btn:hover {
+    background-color: #d32f2f;
+}
+
 
 @keyframes gemini-loading {
-    0% {
-        left: -50%;
-    }
-    50% {
-        left: 25%;
-    }
-    100% {
-        left: 100%;
-    }
+    0% { left: -50%; }
+    50% { left: 25%; }
+    100% { left: 100%; }
 }

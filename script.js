@@ -1,8 +1,9 @@
 const typingForm = document.querySelector(".typing-form");
 const chatlist = document.querySelector(".chat-messages");
+const suggestions=document.querySelectorAll(".suggestion-container .suggestion");
 
 let userMessage = null;
-const API_KEY = "AIzaSyB7PVJ4_ZoipebC4_qKVxkyOzZ3XLi4weg";  // Replace with your actual API Key
+const API_KEY = "key"; // Replace with your actual API Key
 const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
 
 // Create a new message element
@@ -13,21 +14,46 @@ const createMessageElement = (content, className) => {
     return div;
 };
 
+// Show loading animation
 const showLoadingAnimation = () => {
     const html = `
       <div class="message-content">
-                    <div class="loading-container">
-                        <div class="loading-bar"></div>
-                        <div class="loading-bar"></div>
-                        <div class="loading-bar"></div>
-                    </div>                    
-                </div>
+          <div class="loading-container">
+              <div class="loading-bar"></div>
+              <div class="loading-bar"></div>
+              <div class="loading-bar"></div>
+          </div>
+      </div>
     `;
-    const incomingMessagediv = createMessageElement(html, "incoming", "loading");
+    const incomingMessagediv = createMessageElement(html, "incoming");
     chatlist.appendChild(incomingMessagediv);
 };
 
-// Fetch response from API based on user message
+// Typing effect for the AI's response
+const typeTextEffect = (element, text, speed = 80) => {
+    let index = 0;
+
+    const type = () => {
+        if (index < text.length) {
+            element.innerHTML += text.charAt(index);
+            index++;
+            setTimeout(type, speed);
+        }
+    };
+
+    type();
+};
+
+// Copy functionality for the "Copy" button
+const addCopyFunctionality = (button, text) => {
+    button.addEventListener("click", () => {
+        navigator.clipboard.writeText(text).catch((err) => {
+            console.error("Failed to copy text:", err);
+        });
+    });
+};
+
+// Fetch response from API
 const generateAPIresponse = async () => {
     try {
         const response = await fetch(API_URL, {
@@ -45,63 +71,88 @@ const generateAPIresponse = async () => {
         });
 
         const data = await response.json();
-        
+
         if (data.error) {
             console.error('API error:', data.error.message);
-            alert("API Error: " + data.error.message);  // Show alert in case of error
         } else {
             const apiResponse = data?.candidates[0]?.content?.parts[0]?.text;
-            console.log(apiResponse);  // Output the API response
-            
-            // Corrected: Remove the loading animation after response is received (target by class)
+
+            // Remove the loading animation
             const loadingContainer = document.querySelector('.loading-container');
             if (loadingContainer) {
-                loadingContainer.remove();  // Remove the loading container element
+                loadingContainer.remove();
             }
 
-            // Append the response to the chat list
+            // Create the incoming message container
             const html = `
               <div class="message-content">
-                <img src="images/gpt.jpg" alt="AI" class="avatar">
-                <p class="text">${apiResponse}</p>
+                  <img src="images/gpt.jpg" alt="AI" class="avatar">
+                  <p class="text"></p>
+                  <button class="material-symbols-rounded">content_copy</button>
               </div>
             `;
             const incomingMessagediv = createMessageElement(html, "incoming");
             chatlist.appendChild(incomingMessagediv);
+
+            // Apply the typing effect
+            const textElement = incomingMessagediv.querySelector(".text");
+            typeTextEffect(textElement, apiResponse);
+
+            // Add copy functionality to the button
+            const copyButton = incomingMessagediv.querySelector(".material-symbols-rounded");
+            addCopyFunctionality(copyButton, apiResponse);
         }
     } catch (error) {
         console.error('Request Error:', error);
-        alert("Request Error: " + error);  // Show alert in case of a request error
     }
 };
-
-
-
 
 // Handle outgoing chat
 const handleOutgoingChat = () => {
-    userMessage = typingForm.querySelector(".typing-input").value.trim();  // Assign to global userMessage
-  
-    if (!userMessage) {
-        return; // Exit if there is no message
+    userMessage = typingForm.querySelector(".typing-input").value.trim() || userMessage;
+
+    if (!userMessage) return;
+
+    // Hide header and show chat container when the user sends the first message
+    const header = document.querySelector('header'); // Get header element
+
+    if (header && header.style.display !== 'none') {
+        header.style.display = 'none'; // Hide header
     }
-  
+
     const html = `
       <div class="message-content">
-        <img src="images/user.jpg" alt="User Image" class="avatar">
-        <p class="text">${userMessage}</p>
+          <img src="images/user.jpg" alt="User Image" class="avatar">
+          <p class="text">${userMessage}</p>
       </div>
     `;
-  
+
     const outgoingMessagediv = createMessageElement(html, "outgoing");
-    outgoingMessagediv.querySelector(".text").innerText = userMessage;
     chatlist.appendChild(outgoingMessagediv);
 
-    typingForm.reset();  // Clear input
-    setTimeout(showLoadingAnimation, 500); // Show loading animation
+    typingForm.reset();
+    setTimeout(showLoadingAnimation, 500);
 
-    generateAPIresponse(userMessage);  // Pass the userMessage correctly
+    generateAPIresponse();
 };
+suggestions.forEach(suggestion =>{
+    suggestion.addEventListener("click",()=>{
+        userMessage=suggestion.querySelector(".text").innerHTML;
+        handleOutgoingChat();
+    })
+})
+document.getElementById("delete-button").addEventListener("click", function() {
+    // Clear chat messages
+    const chatMessages = document.querySelector(".chat-messages");
+    chatMessages.innerHTML = "";
+
+    // Show the header again
+    const chatContainer = document.querySelector(".chat-container");
+    const chatHeader = document.querySelector(".chat-header");
+    chatContainer.style.display = "block";  // Ensure the chat container is visible
+    chatHeader.style.display = "block";     // Show the header
+});
+
 
 typingForm.addEventListener("submit", (e) => {
     e.preventDefault();
