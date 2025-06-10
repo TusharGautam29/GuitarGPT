@@ -1,0 +1,3 @@
+const config = {
+    apiKey: 'your_gemini_api_key_here'
+};
